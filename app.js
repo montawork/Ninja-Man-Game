@@ -1,3 +1,6 @@
+// SET HIGHSCORE
+document.querySelector('.game-h-score').textContent =
+  localStorage.getItem('ninjaHighScore');
 // BUILD RANDOM WORLD
 const maxWidht = 15;
 const minWidht = 5;
@@ -130,7 +133,11 @@ const moveNinja = (e) => {
   // WIN THE GAME
   if (!world.flat(Infinity).includes(2) && !world.flat(Infinity).includes(3)) {
     let msg = '';
-    if (score > highScore) msg = 'New High Score 🏆';
+    if (score > highScore) {
+      msg = 'New High Score 🏆';
+      document.querySelector('.game-h-score').textContent =
+        localStorage.getItem('ninjaHighScore');
+    }
     showModal('You Win! 🎉', msg);
     isGameEnd = true;
   }
@@ -172,6 +179,9 @@ livesEl.textContent = lives;
 const moveGhost = () => {
   const gameInt = setInterval(() => {
     const randomAction = Math.floor(Math.random() * 4);
+    const ghosts = ['bluey.gif', 'red.gif', 'scaredy.png', 'pinky.gif'];
+    const randomGhost = ghosts[randomAction];
+    ghost.style.backgroundImage = `url(./img/${randomGhost})`;
     const actions = ['ghostX++', 'ghostY++', 'ghostX--', 'ghostY--'];
     const act = actions[randomAction];
     if (act === 'ghostX++' && world[ghostY][ghostX + 1] !== 1) ghostX++;
